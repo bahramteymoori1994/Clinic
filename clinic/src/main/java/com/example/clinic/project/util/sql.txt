@@ -1,0 +1,116 @@
+-- ================================================
+-- Table: PERSON
+-- ================================================
+CREATE TABLE PERSON (
+                        PERSON_ID           BIGINT NOT NULL AUTO_INCREMENT,
+                        FIRST_NAME          NVARCHAR(50) NOT NULL,
+                        LAST_NAME           NVARCHAR(50) NOT NULL,
+                        NATIONAL_CODE       CHAR(10) NOT NULL,
+                        BIRTH_DATE          DATE NOT NULL,
+                        IDENTITY_NUMBER     VARCHAR(10) NOT NULL,
+                        GENDER              TINYINT NOT NULL,
+                        FATHER_NAME         NVARCHAR(50) NOT NULL,
+                        IS_MARRIED          TINYINT NOT NULL,
+                        BORN_PLACE          NVARCHAR(50) NOT NULL,
+                        BORN_COUNTRY        NVARCHAR(50) NOT NULL,
+                        ADDRESS             NVARCHAR(2000) NOT NULL,
+                        PHONE_NUMBER        CHAR(11) NOT NULL,
+                        VERSION_NUM         INT NOT NULL DEFAULT 0,
+                        CREATED_DATE        DATE NOT NULL,
+                        CREATED_TIME        TIME NOT NULL,
+                        CREATED_BY          VARCHAR(50) NOT NULL,
+                        MODIFIED_DATE       DATE NULL,
+                        MODIFIED_TIME       TIME NULL,
+                        MODIFIED_BY         VARCHAR(50) NULL,
+
+                        PRIMARY KEY (PERSON_ID)
+);
+
+CREATE UNIQUE INDEX UK_NATIONAL_CODE ON PERSON (NATIONAL_CODE);
+CREATE UNIQUE INDEX UK_IDENTITY_NUMBER ON PERSON (IDENTITY_NUMBER);
+CREATE UNIQUE INDEX UK_PHONE_NUMBER ON PERSON (PHONE_NUMBER);
+
+-- ================================================
+-- Table: ROLE
+-- ================================================
+CREATE TABLE ROLE (
+                      ROLE_ID               BIGINT NOT NULL AUTO_INCREMENT,
+                      ENGLISH_ROLE_TITLE    VARCHAR(100) NOT NULL,
+                      PERSIAN_ROLE_TITLE    NVARCHAR(100) NOT NULL,
+                      CREATED_DATE          DATE NOT NULL,
+                      CREATED_TIME          TIME NOT NULL,
+                      CREATED_BY            VARCHAR(50) NOT NULL,
+
+                      PRIMARY KEY (ROLE_ID)
+);
+
+CREATE UNIQUE INDEX UK_ENGLISH_ROLE_TITLE ON ROLE (ENGLISH_ROLE_TITLE);
+CREATE UNIQUE INDEX UK_PERSIAN_ROLE_TITLE ON ROLE (PERSIAN_ROLE_TITLE);
+
+-- ================================================
+-- Table: USER
+-- ================================================
+CREATE TABLE USER (
+                      USER_ID         BIGINT NOT NULL AUTO_INCREMENT,
+                      PERSON_ID       BIGINT NOT NULL,
+                      USERNAME        VARCHAR(50) NOT NULL,
+                      PASSWORD        VARCHAR(2000) NOT NULL,
+                      EMAIL           VARCHAR(100) NOT NULL,
+                      CREATED_DATE    DATE NOT NULL,
+                      CREATED_TIME    TIME NOT NULL,
+                      CREATED_BY      VARCHAR(50) NOT NULL,
+
+                      PRIMARY KEY (USER_ID)
+);
+
+CREATE UNIQUE INDEX UK_USERNAME ON USER (USERNAME);
+CREATE UNIQUE INDEX UK_EMAIL ON USER (EMAIL);
+
+-- ================================================
+-- Table: USER_ROLE
+-- ================================================
+CREATE TABLE USER_ROLE (
+                           USER_ID BIGINT NOT NULL,
+                           ROLE_ID BIGINT NOT NULL,
+
+                           PRIMARY KEY (USER_ID, ROLE_ID)
+);
+
+-- ================================================
+-- Table: PERMISSION_ACCESS
+-- ================================================
+CREATE TABLE PERMISSION_ACCESS (
+                                  PERMISSION_ACCESS_ID BIGINT NOT NULL AUTO_INCREMENT,
+                                  ROLE_ID              BIGINT NOT NULL,
+                                  ACCESS_TITLE         NVARCHAR(50) NOT NULL,
+                                  CREATED_DATE         DATE NOT NULL,
+                                  CREATED_TIME         TIME NOT NULL,
+                                  CREATED_BY           VARCHAR(50) NOT NULL,
+
+                                  PRIMARY KEY (PERMISSION_ACCESS_ID)
+);
+
+CREATE UNIQUE INDEX UK_ACCESS_TITLE ON PERMISSION_ACCESS (ACCESS_TITLE);
+
+-- ================================================
+-- Foreign Keys
+-- ================================================
+ALTER TABLE PERMISSION_ACCESS
+    ADD CONSTRAINT FK_PERMISSION_ROLE
+        FOREIGN KEY (ROLE_ID) REFERENCES ROLE(ROLE_ID)
+            ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE USER
+    ADD CONSTRAINT FK_USER_PERSON
+        FOREIGN KEY (PERSON_ID) REFERENCES PERSON(PERSON_ID)
+            ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE USER_ROLE
+    ADD CONSTRAINT FK_USE_RROLE_USER
+        FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID)
+            ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE USER_ROLE
+    ADD CONSTRAINT FK_USER_ROLE_ROLE
+        FOREIGN KEY (ROLE_ID) REFERENCES ROLE(ROLE_ID)
+            ON DELETE RESTRICT ON UPDATE RESTRICT;
