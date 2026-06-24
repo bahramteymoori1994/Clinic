@@ -1,8 +1,13 @@
 package com.example.clinic.project.services.interfaces;
 
-import com.example.clinic.project.model.dtos.request.UserRequestDto;
-import com.example.clinic.project.model.dtos.response.UserResponseDto;
+import com.example.clinic.project.model.dtos.response.UserRoleResponseDto;
 
-public interface UserRoleService extends AbstractBaseService<UserRequestDto, UserResponseDto>{
+import java.util.List;
 
+public interface UserRoleService{
+
+    UserRoleResponseDto save(Long userId, Long roleId);
+    UserRoleResponseDto update(Long userId, Long roleId);
+    UserRoleResponseDto findById(Long userRoleId) throws Exception;
+    List<UserRoleResponseDto> findAll();
 }

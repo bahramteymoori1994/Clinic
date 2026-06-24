@@ -22,16 +22,16 @@ public class UserRole {
 
     @NotNull
     @Column(name = "CREATED_DATE", nullable = false)
-    private LocalDate createdDate = LocalDate.now();
+    private LocalDate createdDate;
 
     @NotNull
     @Column(name = "CREATED_TIME", nullable = false)
-    private LocalTime createdTime = LocalTime.now();
+    private LocalTime createdTime;
 
     @Size(max = 50)
     @NotNull
     @Column(name = "CREATED_BY", nullable = false, length = 50)
-    private String createdBy = "admin";
+    private String createdBy;
 
     @NotNull
     @Version
