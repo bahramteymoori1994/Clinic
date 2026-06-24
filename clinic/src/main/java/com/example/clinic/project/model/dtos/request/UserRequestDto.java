@@ -10,9 +10,9 @@ public class UserRequestDto {
     private String username;
     private String password;
     private String email;
-    private LocalDate createdDate = LocalDate.now();
-    private LocalTime createdTime = LocalTime.now();
-    private String createdBy = "admin";
+    private LocalDate createdDate;
+    private LocalTime createdTime;
+    private String createdBy;
     private Integer versionNum;
 
     public UserRequestDto() {
