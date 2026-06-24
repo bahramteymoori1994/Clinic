@@ -70,14 +70,14 @@ public class UserController {
         return roleService.update(roleRequestDto);
     }
 
-    @GetMapping("/findRoleById/{id}")
+    @GetMapping("/role/findRoleById/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public RoleResponseDto findRoleById(@PathVariable Long id) throws Exception {
 
         return roleService.findById(id);
     }
 
-    @GetMapping("/findAllRoles")
+    @GetMapping("/role/findAllRoles")
     @ResponseStatus(value = HttpStatus.OK)
     public List<RoleResponseDto> findAllRoles() throws Exception {
 
@@ -98,14 +98,14 @@ public class UserController {
         return permissionAccessService.update(permissionAccessRequestDto);
     }
 
-    @GetMapping("/findPermissionAccessById/{id}")
+    @GetMapping("/permissionAccess/findPermissionAccessById/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public PermissionAccessResponseDto findPermissionAccessById(@PathVariable Long id) throws Exception {
 
         return permissionAccessService.findById(id);
     }
 
-    @GetMapping("/findAllRoles")
+    @GetMapping("/permissionAccess/findAllPermissionAccesses")
     @ResponseStatus(value = HttpStatus.OK)
     public List<PermissionAccessResponseDto> findAllPermissionAccesses() throws Exception {
 
