@@ -4,12 +4,14 @@ import com.example.clinic.project.converters.RoleConverter;
 import com.example.clinic.project.model.dtos.request.RoleRequestDto;
 import com.example.clinic.project.model.dtos.response.RoleResponseDto;
 import com.example.clinic.project.model.entities.Role;
+import com.example.clinic.project.model.entities.User;
 import com.example.clinic.project.repositories.RoleRepository;
+import com.example.clinic.project.repositories.UserRepository;
 import com.example.clinic.project.services.interfaces.RoleService;
-import com.example.clinic.project.services.interfaces.UserRoleService;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,14 +19,12 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
-    private final UserRoleService userRoleService;
+    private final UserRepository userRepository;
 
-    public RoleServiceImpl(RoleRepository roleRepository, UserRoleService userRoleService) {
+    public RoleServiceImpl(RoleRepository roleRepository, UserRepository userRepository) {
         this.roleRepository = roleRepository;
-        this.userRoleService = userRoleService;
+        this.userRepository = userRepository;
     }
-
-    //TODO : inject UserRole service to implement junction table
 
     @Override
     public RoleResponseDto save(RoleRequestDto roleRequestDto) throws Exception {
@@ -38,10 +38,24 @@ public class RoleServiceImpl implements RoleService {
                 .setCreatedDate(LocalDate.now())
                 .setCreatedTime(LocalTime.now());
 
-        Role role = RoleConverter.convertToEntity(roleRequestDto);
-        Role roleSaved = roleRepository.saveAndFlush(role);
+        List<User> users = new ArrayList<>();
+        List<Long> usersId = roleRequestDto.getUsers();
 
-        userRoleService.save(roleRequestDto.getUserId() ,roleSaved.getId());
+        if( roleRequestDto.getUsers() != null || !roleRequestDto.getUsers().isEmpty() ){
+
+            usersId.stream()
+                    .forEach(userId -> {
+                        try {
+                            User findUserById = userRepository.findById(userId).orElseThrow(() -> new Exception("User id not found to be saved"));
+                            users.add(findUserById);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+        }
+
+        Role role = RoleConverter.convertToEntity(roleRequestDto, users);
+        Role roleSaved = roleRepository.saveAndFlush(role);
 
         if( roleSaved == null ){
             throw new Exception("Role saved object is null");
@@ -62,13 +76,27 @@ public class RoleServiceImpl implements RoleService {
                 .setCreatedDate(LocalDate.now())
                 .setCreatedTime(LocalTime.now());
 
-        Role role = RoleConverter.convertToEntity(roleRequestDto);
+        List<User> users = new ArrayList<>();
+        List<Long> usersId = roleRequestDto.getUsers();
+
+        if( roleRequestDto.getUsers() != null || !roleRequestDto.getUsers().isEmpty() ){
+
+            usersId.stream()
+                    .forEach(userId -> {
+                        try {
+                            User findUserById = userRepository.findById(userId).orElseThrow(() -> new Exception("User id not found to be saved"));
+                            users.add(findUserById);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+        }
+
+        Role role = RoleConverter.convertToEntity(roleRequestDto, users);
         Role roleUpdated = roleRepository.save(role);
 
-        userRoleService.save(roleRequestDto.getUserId() ,roleUpdated.getId());
-
         if( roleUpdated == null ){
-            throw new Exception("Role updated object is null");
+            throw new Exception("Role saved object is null");
         }
 
         return RoleConverter.convertToDto(roleUpdated);
@@ -80,11 +108,11 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findById(id).stream()
                 .map(RoleConverter::convertToDto)
                 .findFirst()
-                .orElseThrow(() -> new Exception("Role id not found"));
+                .orElseThrow(() -> new Exception("Role id not found...!"));
     }
 
     @Override
-    public List<RoleResponseDto> findAll() {
+    public List<RoleResponseDto> findAll() throws Exception {
 
         return roleRepository.findAll()
                 .stream()

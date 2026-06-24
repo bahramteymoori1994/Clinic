@@ -2,30 +2,32 @@ package com.example.clinic.project.model.dtos.request;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RoleRequestDto {
 
     private Long id;
-    private Long userId;
     private String englishRoleTitle;
     private String persianRoleTitle;
     private LocalDate createdDate;
     private LocalTime createdTime;
     private String createdBy;
     private Integer versionNum;
+    private List<Long> users = new ArrayList<>();
 
     public RoleRequestDto() {
     }
 
-    public RoleRequestDto(Long id, Long userId, String englishRoleTitle, String persianRoleTitle, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
+    public RoleRequestDto(Long id, String englishRoleTitle, String persianRoleTitle, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum, List<Long> users) {
         this.id = id;
-        this.userId = userId;
         this.englishRoleTitle = englishRoleTitle;
         this.persianRoleTitle = persianRoleTitle;
         this.createdDate = createdDate;
         this.createdTime = createdTime;
         this.createdBy = createdBy;
         this.versionNum = versionNum;
+        this.users = users;
     }
 
     public Long getId() {
@@ -34,15 +36,6 @@ public class RoleRequestDto {
 
     public RoleRequestDto setId(Long id) {
         this.id = id;
-        return this;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public RoleRequestDto setUserId(Long userId) {
-        this.userId = userId;
         return this;
     }
 
@@ -100,17 +93,26 @@ public class RoleRequestDto {
         return this;
     }
 
+    public List<Long> getUsers() {
+        return users;
+    }
+
+    public RoleRequestDto setUsers(List<Long> users) {
+        this.users = users;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "RoleRequestDto{" +
                 "id=" + id +
-                ", userId=" + userId +
                 ", englishRoleTitle='" + englishRoleTitle + '\'' +
                 ", persianRoleTitle='" + persianRoleTitle + '\'' +
                 ", createdDate=" + createdDate +
                 ", createdTime=" + createdTime +
                 ", createdBy='" + createdBy + '\'' +
                 ", versionNum=" + versionNum +
+                ", users=" + users +
                 '}';
     }
 }

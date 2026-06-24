@@ -17,8 +17,9 @@ public class User {
     @Column(name = "USER_ID", nullable = false)
     private Long id;
 
-    @NotNull
-    private Long person;
+    @OneToOne
+    @JoinColumn(name = "PERSON_ID", nullable = false)
+    private Person person;
 
     @Size(max = 50)
     @NotNull
@@ -55,7 +56,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, Long person, String username, String password, String email, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
+    public User(Long id, Person person, String username, String password, String email, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
         this.id = id;
         this.person = person;
         this.username = username;
@@ -76,11 +77,11 @@ public class User {
         return this;
     }
 
-    public Long getPerson() {
+    public Person getPerson() {
         return person;
     }
 
-    public User setPerson(Long person) {
+    public User setPerson(Person person) {
         this.person = person;
         return this;
     }

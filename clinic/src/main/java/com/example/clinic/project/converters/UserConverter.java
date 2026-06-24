@@ -2,11 +2,12 @@ package com.example.clinic.project.converters;
 
 import com.example.clinic.project.model.dtos.request.UserRequestDto;
 import com.example.clinic.project.model.dtos.response.UserResponseDto;
+import com.example.clinic.project.model.entities.Person;
 import com.example.clinic.project.model.entities.User;
 
 public class UserConverter {
 
-    public static User convertToEntity(UserRequestDto userRequestDto){
+    public static User convertToEntity(UserRequestDto userRequestDto, Person person){
 
         User user = new User();
 
@@ -14,12 +15,12 @@ public class UserConverter {
                 .setId(userRequestDto.getId())
                 .setUsername(userRequestDto.getUsername())
                 .setPassword(userRequestDto.getPassword())
-                .setPerson(userRequestDto.getPerson())
                 .setEmail(userRequestDto.getEmail())
                 .setVersionNum(userRequestDto.getVersionNum())
-                .setCreatedDate(userRequestDto.getCreatedDate())
                 .setCreatedTime(userRequestDto.getCreatedTime())
-                .setCreatedBy(userRequestDto.getCreatedBy());
+                .setCreatedDate(userRequestDto.getCreatedDate())
+                .setCreatedBy(userRequestDto.getCreatedBy())
+                .setPerson(person);
 
         return user;
     }
@@ -32,12 +33,18 @@ public class UserConverter {
                 .setId(user.getId())
                 .setUsername(user.getUsername())
                 .setPassword(user.getPassword())
-                .setPerson(user.getPerson())
                 .setEmail(user.getEmail())
                 .setVersionNum(user.getVersionNum())
-                .setCreatedDate(user.getCreatedDate())
                 .setCreatedTime(user.getCreatedTime())
-                .setCreatedBy(user.getCreatedBy());
+                .setCreatedDate(user.getCreatedDate())
+                .setCreatedBy(user.getCreatedBy())
+                .setPersonId(userResponseDto.getPersonId());
+
+        if( user.getPerson() != null ){
+
+            Long personId = user.getPerson().getId();
+            userResponseDto.setPersonId(personId);
+        }
 
         return userResponseDto;
     }

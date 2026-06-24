@@ -13,7 +13,6 @@ public class PermissionAccessConverter {
         permissionAccess
                 .setId(permissionAccessRequestDto.getId())
                 .setAccessTitle(permissionAccessRequestDto.getAccessTitle())
-                .setRole(permissionAccessRequestDto.getRole())
                 .setVersionNum(permissionAccessRequestDto.getVersionNum())
                 .setCreatedDate(permissionAccessRequestDto.getCreatedDate())
                 .setCreatedTime(permissionAccessRequestDto.getCreatedTime())
@@ -29,7 +28,6 @@ public class PermissionAccessConverter {
         permissionAccessResponseDto
                 .setId(permissionAccess.getId())
                 .setAccessTitle(permissionAccess.getAccessTitle())
-                .setRole(permissionAccess.getRole())
                 .setVersionNum(permissionAccess.getVersionNum())
                 .setCreatedDate(permissionAccess.getCreatedDate())
                 .setCreatedTime(permissionAccess.getCreatedTime())

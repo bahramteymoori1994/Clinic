@@ -38,7 +38,7 @@ public class PersonController {
         return personService.findById(id);
     }
 
-    @PutMapping("/findAll")
+    @GetMapping("/findAll")
     @ResponseStatus(value = HttpStatus.OK)
     public List<PersonResponseDto> findAll() throws Exception {
 

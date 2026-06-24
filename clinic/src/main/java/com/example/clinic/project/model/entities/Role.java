@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "roleEntity")
 @Table(name = "role")
@@ -44,10 +46,16 @@ public class Role {
     @Version
     private Integer versionNum;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID", foreignKey =
+    @ForeignKey(name = "FK_ROLE_ID")), inverseJoinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID",
+    foreignKey = @ForeignKey(name = "FK_USER_ID")))
+    private List<User> users = new ArrayList<>();
+
     public Role() {
     }
 
-    public Role(Long id, String englishRoleTitle, String persianRoleTitle, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
+    public Role(Long id, String englishRoleTitle, String persianRoleTitle, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum, List<User> users) {
         this.id = id;
         this.englishRoleTitle = englishRoleTitle;
         this.persianRoleTitle = persianRoleTitle;
@@ -55,6 +63,7 @@ public class Role {
         this.createdTime = createdTime;
         this.createdBy = createdBy;
         this.versionNum = versionNum;
+        this.users = users;
     }
 
     public Long getId() {
@@ -120,6 +129,15 @@ public class Role {
         return this;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public Role setUsers(List<User> users) {
+        this.users = users;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Role{" +
@@ -130,6 +148,7 @@ public class Role {
                 ", createdTime=" + createdTime +
                 ", createdBy='" + createdBy + '\'' +
                 ", versionNum=" + versionNum +
+                ", users=" + users +
                 '}';
     }
 }

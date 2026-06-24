@@ -6,7 +6,7 @@ import java.time.LocalTime;
 public class PermissionAccessRequestDto {
 
     private Long id;
-    private Long role;
+    private Long roleId;
     private String accessTitle;
     private LocalDate createdDate;
     private LocalTime createdTime;
@@ -16,9 +16,9 @@ public class PermissionAccessRequestDto {
     public PermissionAccessRequestDto() {
     }
 
-    public PermissionAccessRequestDto(Long id, Long role, String accessTitle, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
+    public PermissionAccessRequestDto(Long id, Long roleId, String accessTitle, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
         this.id = id;
-        this.role = role;
+        this.roleId = roleId;
         this.accessTitle = accessTitle;
         this.createdDate = createdDate;
         this.createdTime = createdTime;
@@ -35,12 +35,12 @@ public class PermissionAccessRequestDto {
         return this;
     }
 
-    public Long getRole() {
-        return role;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public PermissionAccessRequestDto setRole(Long role) {
-        this.role = role;
+    public PermissionAccessRequestDto setRoleId(Long roleId) {
+        this.roleId = roleId;
         return this;
     }
 
@@ -93,7 +93,7 @@ public class PermissionAccessRequestDto {
     public String toString() {
         return "PermissionAccessRequestDto{" +
                 "id=" + id +
-                ", role=" + role +
+                ", roleId=" + roleId +
                 ", accessTitle='" + accessTitle + '\'' +
                 ", createdDate=" + createdDate +
                 ", createdTime=" + createdTime +

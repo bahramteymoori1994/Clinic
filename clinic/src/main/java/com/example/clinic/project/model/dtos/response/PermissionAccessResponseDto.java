@@ -1,12 +1,14 @@
 package com.example.clinic.project.model.dtos.response;
 
+import com.example.clinic.project.model.entities.Role;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class PermissionAccessResponseDto {
 
     private Long id;
-    private Long role;
+    private Long roleId;
     private String accessTitle;
     private LocalDate createdDate;
     private LocalTime createdTime;
@@ -16,9 +18,9 @@ public class PermissionAccessResponseDto {
     public PermissionAccessResponseDto() {
     }
 
-    public PermissionAccessResponseDto(Long id, Long role, String accessTitle, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
+    public PermissionAccessResponseDto(Long id, Long roleId, String accessTitle, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
         this.id = id;
-        this.role = role;
+        this.roleId = roleId;
         this.accessTitle = accessTitle;
         this.createdDate = createdDate;
         this.createdTime = createdTime;
@@ -35,12 +37,12 @@ public class PermissionAccessResponseDto {
         return this;
     }
 
-    public Long getRole() {
-        return role;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public PermissionAccessResponseDto setRole(Long role) {
-        this.role = role;
+    public PermissionAccessResponseDto setRoleId(Long roleId) {
+        this.roleId = roleId;
         return this;
     }
 
@@ -93,7 +95,7 @@ public class PermissionAccessResponseDto {
     public String toString() {
         return "PermissionAccessResponseDto{" +
                 "id=" + id +
-                ", role=" + role +
+                ", roleId=" + roleId +
                 ", accessTitle='" + accessTitle + '\'' +
                 ", createdDate=" + createdDate +
                 ", createdTime=" + createdTime +

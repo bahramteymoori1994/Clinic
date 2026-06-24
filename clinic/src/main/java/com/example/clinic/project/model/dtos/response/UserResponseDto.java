@@ -6,7 +6,7 @@ import java.time.LocalTime;
 public class UserResponseDto {
 
     private Long id;
-    private Long person;
+    private Long personId;
     private String username;
     private String password;
     private String email;
@@ -18,9 +18,9 @@ public class UserResponseDto {
     public UserResponseDto() {
     }
 
-    public UserResponseDto(Long id, Long person, String username, String password, String email, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
+    public UserResponseDto(Long id, Long personId, String username, String password, String email, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
         this.id = id;
-        this.person = person;
+        this.personId = personId;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -39,12 +39,12 @@ public class UserResponseDto {
         return this;
     }
 
-    public Long getPerson() {
-        return person;
+    public Long getPersonId() {
+        return personId;
     }
 
-    public UserResponseDto setPerson(Long person) {
-        this.person = person;
+    public UserResponseDto setPersonId(Long personId) {
+        this.personId = personId;
         return this;
     }
 
@@ -115,7 +115,7 @@ public class UserResponseDto {
     public String toString() {
         return "UserResponseDto{" +
                 "id=" + id +
-                ", person=" + person +
+                ", personId=" + personId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +

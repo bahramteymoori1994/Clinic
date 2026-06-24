@@ -17,8 +17,9 @@ public class PermissionAccess {
     @Column(name = "PERMISSION_ACCESS_ID", nullable = false)
     private Long id;
 
-    @NotNull
-    private Long role;
+    @ManyToOne
+    @JoinColumn(name = "ROLE_ID", nullable = false)
+    private Role role;
 
     @Size(max = 50)
     @NotNull
@@ -45,7 +46,7 @@ public class PermissionAccess {
     public PermissionAccess() {
     }
 
-    public PermissionAccess(Long id, Long role, String accessTitle, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
+    public PermissionAccess(Long id, Role role, String accessTitle, LocalDate createdDate, LocalTime createdTime, String createdBy, Integer versionNum) {
         this.id = id;
         this.role = role;
         this.accessTitle = accessTitle;
@@ -64,11 +65,11 @@ public class PermissionAccess {
         return this;
     }
 
-    public Long getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public PermissionAccess setRole(Long role) {
+    public PermissionAccess setRole(Role role) {
         this.role = role;
         return this;
     }
