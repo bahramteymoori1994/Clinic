@@ -1,5 +1,7 @@
 package com.example.clinic.project.model.entities;
 
+import com.example.clinic.project.model.enums.Gender;
+import com.example.clinic.project.model.enums.MarriageStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -41,8 +43,9 @@ public class Person {
     private String identityNumber;
 
     @NotNull
+    @Enumerated(value = EnumType.ORDINAL)
     @Column(name = "GENDER", nullable = false)
-    private Byte gender;
+    private Gender gender;
 
     @Size(max = 50)
     @NotNull
@@ -50,8 +53,9 @@ public class Person {
     private String fatherName;
 
     @NotNull
+    @Enumerated(value = EnumType.ORDINAL)
     @Column(name = "IS_MARRIED", nullable = false)
-    private Byte isMarried;
+    private MarriageStatus isMarried;
 
     @Size(max = 50)
     @NotNull
@@ -105,7 +109,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(Long id, String firstName, String lastName, String nationalCode, LocalDate birthDate, String identityNumber, Byte gender, String fatherName, Byte isMarried, String bornPlace, String bornCountry, String address, String phoneNumber, Integer versionNum, LocalDate createdDate, LocalTime createdTime, String createdBy, LocalDate modifiedDate, LocalTime modifiedTime, String modifiedBy) {
+    public Person(Long id, String firstName, String lastName, String nationalCode, LocalDate birthDate, String identityNumber, Gender gender, String fatherName, MarriageStatus isMarried, String bornPlace, String bornCountry, String address, String phoneNumber, Integer versionNum, LocalDate createdDate, LocalTime createdTime, String createdBy, LocalDate modifiedDate, LocalTime modifiedTime, String modifiedBy) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -182,11 +186,11 @@ public class Person {
         return this;
     }
 
-    public Byte getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public Person setGender(Byte gender) {
+    public Person setGender(Gender gender) {
         this.gender = gender;
         return this;
     }
@@ -200,11 +204,11 @@ public class Person {
         return this;
     }
 
-    public Byte getIsMarried() {
+    public MarriageStatus getIsMarried() {
         return isMarried;
     }
 
-    public Person setIsMarried(Byte isMarried) {
+    public Person setIsMarried(MarriageStatus isMarried) {
         this.isMarried = isMarried;
         return this;
     }
