@@ -37,7 +37,8 @@ public class UserServiceImpl implements UserService {
                 .setCreatedDate(LocalDate.now())
                 .setCreatedTime(LocalTime.now());
 
-        Person personById = personRepository.findById(userRequestDto.getPersonId()).orElseThrow(() -> new Exception("Person id not found to be saved"));
+        Person personById = personRepository.findById(userRequestDto.getPersonId())
+                .orElseThrow(() -> new Exception("Person id not found to be saved"));
         User user = UserConverter.convertToEntity(userRequestDto, personById);
         User userSaved = userRepository.saveAndFlush(user);
 
@@ -60,7 +61,8 @@ public class UserServiceImpl implements UserService {
                 .setCreatedDate(LocalDate.now())
                 .setCreatedTime(LocalTime.now());
 
-        Person personById = personRepository.findById(userRequestDto.getPersonId()).orElseThrow(() -> new Exception("Person id not found to be updated"));
+        Person personById = personRepository.findById(userRequestDto.getPersonId())
+                .orElseThrow(() -> new Exception("Person id not found to be updated"));
         User user = UserConverter.convertToEntity(userRequestDto, personById);
         User userUpdated = userRepository.save(user);
 

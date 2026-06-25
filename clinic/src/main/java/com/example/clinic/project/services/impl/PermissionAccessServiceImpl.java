@@ -4,7 +4,9 @@ import com.example.clinic.project.converters.PermissionAccessConverter;
 import com.example.clinic.project.model.dtos.request.PermissionAccessRequestDto;
 import com.example.clinic.project.model.dtos.response.PermissionAccessResponseDto;
 import com.example.clinic.project.model.entities.PermissionAccess;
+import com.example.clinic.project.model.entities.Role;
 import com.example.clinic.project.repositories.PermissionAccessRepository;
+import com.example.clinic.project.repositories.RoleRepository;
 import com.example.clinic.project.services.interfaces.PermissionAccessService;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -16,9 +18,11 @@ import java.util.stream.Collectors;
 public class PermissionAccessServiceImpl implements PermissionAccessService {
 
     private final PermissionAccessRepository permissionAccessRepository;
+    private final RoleRepository roleRepository;
 
-    public PermissionAccessServiceImpl(PermissionAccessRepository permissionAccessRepository) {
+    public PermissionAccessServiceImpl(PermissionAccessRepository permissionAccessRepository, RoleRepository roleRepository) {
         this.permissionAccessRepository = permissionAccessRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -33,7 +37,10 @@ public class PermissionAccessServiceImpl implements PermissionAccessService {
                 .setCreatedDate(LocalDate.now())
                 .setCreatedTime(LocalTime.now());
 
-        PermissionAccess permissionAccess = PermissionAccessConverter.convertToEntity(permissionAccessRequestDto);
+        Role findRoleById = roleRepository.findById(permissionAccessRequestDto.getRoleId())
+                .orElseThrow(() -> new Exception("Role Id not found to be saved"));
+
+        PermissionAccess permissionAccess = PermissionAccessConverter.convertToEntity(permissionAccessRequestDto, findRoleById);
         PermissionAccess permissionAccessSaved = permissionAccessRepository.saveAndFlush(permissionAccess);
 
         if( permissionAccessSaved == null ){
@@ -55,7 +62,10 @@ public class PermissionAccessServiceImpl implements PermissionAccessService {
                 .setCreatedDate(LocalDate.now())
                 .setCreatedTime(LocalTime.now());
 
-        PermissionAccess permissionAccess = PermissionAccessConverter.convertToEntity(permissionAccessRequestDto);
+        Role findRoleById = roleRepository.findById(permissionAccessRequestDto.getRoleId())
+                .orElseThrow(() -> new Exception("Role Id not found to be saved"));
+
+        PermissionAccess permissionAccess = PermissionAccessConverter.convertToEntity(permissionAccessRequestDto, findRoleById);
         PermissionAccess permissionAccessUpdated = permissionAccessRepository.save(permissionAccess);
 
         if( permissionAccessUpdated == null ){

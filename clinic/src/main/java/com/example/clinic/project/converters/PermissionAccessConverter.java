@@ -3,10 +3,11 @@ package com.example.clinic.project.converters;
 import com.example.clinic.project.model.dtos.request.PermissionAccessRequestDto;
 import com.example.clinic.project.model.dtos.response.PermissionAccessResponseDto;
 import com.example.clinic.project.model.entities.PermissionAccess;
+import com.example.clinic.project.model.entities.Role;
 
 public class PermissionAccessConverter {
 
-    public static PermissionAccess convertToEntity(PermissionAccessRequestDto permissionAccessRequestDto){
+    public static PermissionAccess convertToEntity(PermissionAccessRequestDto permissionAccessRequestDto, Role role){
 
         PermissionAccess permissionAccess = new PermissionAccess();
 
@@ -14,6 +15,7 @@ public class PermissionAccessConverter {
                 .setId(permissionAccessRequestDto.getId())
                 .setAccessTitle(permissionAccessRequestDto.getAccessTitle())
                 .setVersionNum(permissionAccessRequestDto.getVersionNum())
+                .setRole(role)
                 .setCreatedDate(permissionAccessRequestDto.getCreatedDate())
                 .setCreatedTime(permissionAccessRequestDto.getCreatedTime())
                 .setCreatedBy(permissionAccessRequestDto.getCreatedBy());
@@ -32,6 +34,11 @@ public class PermissionAccessConverter {
                 .setCreatedDate(permissionAccess.getCreatedDate())
                 .setCreatedTime(permissionAccess.getCreatedTime())
                 .setCreatedBy(permissionAccess.getCreatedBy());
+
+        if( permissionAccess.getRole() != null ){
+            Long permissionAccessId = permissionAccess.getRole().getId();
+            permissionAccessResponseDto.setRoleId(permissionAccessId);
+        }
 
         return permissionAccessResponseDto;
     }

@@ -46,7 +46,8 @@ public class RoleServiceImpl implements RoleService {
             usersId.stream()
                     .forEach(userId -> {
                         try {
-                            User findUserById = userRepository.findById(userId).orElseThrow(() -> new Exception("User id not found to be saved"));
+                            User findUserById = userRepository.findById(userId)
+                                    .orElseThrow(() -> new Exception("User id not found to be saved"));
                             users.add(findUserById);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
@@ -84,7 +85,8 @@ public class RoleServiceImpl implements RoleService {
             usersId.stream()
                     .forEach(userId -> {
                         try {
-                            User findUserById = userRepository.findById(userId).orElseThrow(() -> new Exception("User id not found to be saved"));
+                            User findUserById = userRepository.findById(userId)
+                                    .orElseThrow(() -> new Exception("User id not found to be saved"));
                             users.add(findUserById);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
